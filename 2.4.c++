@@ -16,7 +16,12 @@ const char* FragmentShaderSource = "#version 330 core\n"
 "	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 "}\0";
 int main()
-{	//创建VBO并根据VBO的ID赋予一块VBO对象的内存
+{	//创建VAO(vertex array object)
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	//绑定VAO
+	glBindVertexArray(VAO);	
+	//创建VBO并根据VBO的ID赋予一块VBO对象的内存
 	unsigned int VBO;//VetexBufferObject,顶点缓存对象
 	glGenBuffers(1,&VBO);
 	//顶点缓冲对象的缓冲类型是GL_ARRAY_BUFFER,使用glBindBuffer函数把新创建的缓冲绑定到GL_ARRAY_BUFFER目标上
@@ -96,9 +101,9 @@ int main()
 	//以顶点属性位置值为参数，启用顶点属性(顶点属性默认是禁用的)
 	glEnableVertexAttribArray(0);
 	//【PS:目前为止完成了将顶点数组放到缓冲中;设置顶点属性指针;设置并链接着色器。原书中设置顶点属性指针放到了设置着色器后面讲解，此处代码结构与原书保持一致】
-	
-	
-	
-	
+	glBindVertexArray(VAO);
+	//glDrawArrays使用当前激活的着色器，之前配置的顶点属性和VBO的顶点数据来绘制图元(Primitive)
+	//glDrawArrays:打算绘制的图元的类型,顶点数组的起始索引,绘制顶点的个数
+	glDrawArrays(GL_TRIANGLES,0,3);
 	return 0;
 }
